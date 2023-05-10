@@ -4,6 +4,8 @@
 id="myMap"
 style="width: 100%; height: 300px;"
 scale='16'
+latitude="{{latitude}}" 
+longitude="{{longitude}}"
 polyline="{{polyline}}"
 markers="{{markers}}"
 show-location="true"

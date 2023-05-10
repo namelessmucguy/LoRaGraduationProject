@@ -11,7 +11,9 @@ Page({
     data: {
         percent: 0,
         status: 'normal',
-        sta:'离线'
+        sta:'离线',
+        latitude:'',
+        longitude:''
     },
 
     /**
@@ -38,25 +40,34 @@ Page({
               longitude: location.split(",")[1],
               width: 30,
               height: 30,
-            },  
-            ]
+            }],
         })
-        mythis.moveTolocation();
         setInterval(function () {  
             mythis.setData({
                 percent:app.globalData.capacity[1],
                 location:app.globalData.location[1]
             })
           }, 1000) //ms
+
+          let mapCtx = wx.createMapContext('myMap')
+          mapCtx.moveToLocation({
+            latitude: location.split(",")[0],
+            longitude: location.split(",")[1],
+            success: function() {
+              console.log('地图移动成功')
+            },
+            fail: function() {
+              console.log('地图移动失败')
+            },
+            complete: function() {
+              console.log('地图移动完成')
+            }
+          })
     },
 
   /**
    * 移动到中心点
    */
-  moveTolocation: function () {
-    var mapCtx = wx.createMapContext(mapId);
-    mapCtx.moveToLocation();
-  },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

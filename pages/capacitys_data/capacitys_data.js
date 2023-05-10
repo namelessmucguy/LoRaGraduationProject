@@ -11,52 +11,62 @@ Page({
     data: {
         percent: 0,
         status: 'normal',
-        sta:'离线'
+        sta:'离线',
+        latitude:'',
+        longitude:''
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function () {
-        // 实例化API核心类
-        qqmapsdk = new QQMapWX({
-            key: 'XPSBZ-XP4W6-4T6SP-EGOLV-VMEQO-YVB6K'
-        });
-        var location = app.globalData.location[0];
-         //loacation
-         var mythis = this;
-         if (location) {
-            mythis.setData({
-                sta:'在线'
-            })
-        }
-         mythis.setData({
-            markers: [{
-              iconPath: "../../images/location.png",
-              id: 0,
-              latitude: location.split(",")[0],
-              longitude: location.split(",")[1],
-              width: 30,
-              height: 30,
-            },  
-            ]
-        })
-        mythis.moveTolocation();
-        setInterval(function () {  
-            mythis.setData({
-                percent:app.globalData.capacity[0],
-                location:app.globalData.location[0]
-            })
-          }, 1000) //ms
+                // 实例化API核心类
+                qqmapsdk = new QQMapWX({
+                    key: 'XPSBZ-XP4W6-4T6SP-EGOLV-VMEQO-YVB6K'
+                });
+                var location = app.globalData.location[0];
+                //loacation
+                var mythis = this;
+                if (location) {
+                    mythis.setData({
+                        sta:'在线'
+                    })
+                }
+                mythis.setData({
+                    markers: [{
+                    iconPath: "../../images/location.png",
+                    id: 0,
+                    latitude: location.split(",")[0],
+                    longitude: location.split(",")[1],
+                    width: 30,
+                    height: 30,
+                    },  
+                    ]
+                })
+                setInterval(function () {  
+                    mythis.setData({
+                        percent:app.globalData.capacity[0],
+                        location:app.globalData.location[0]
+                    })
+                }, 1000) //ms
+        
+                let mapCtx = wx.createMapContext('myMap')
+                mapCtx.moveToLocation({
+                  latitude: location.split(",")[0],
+                  longitude: location.split(",")[1],
+                  success: function() {
+                    console.log('地图移动成功')
+                  },
+                  fail: function() {
+                    console.log('地图移动失败')
+                  },
+                  complete: function() {
+                    console.log('地图移动完成')
+                  }
+                })
     },
 
-  /**
-   * 移动到中心点
-   */
-  moveTolocation: function () {
-    var mapCtx = wx.createMapContext(mapId);
-    mapCtx.moveToLocation();
-  },
+
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -68,8 +78,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
-
     },
 
     /**

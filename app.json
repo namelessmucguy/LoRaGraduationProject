@@ -30,7 +30,8 @@
       "selectedIconPath": "images/rubbish_on.png",
       "iconPath": "images/rubbish_off.png",
       "pagePath": "pages/capacitys/capacitys"
-    }]
+    }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
